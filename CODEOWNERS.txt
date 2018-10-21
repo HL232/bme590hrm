@@ -1,0 +1,2 @@
+# Global CODEOWNERS
+*       @mlp6 @dward2 @suyashkumar @iperezx
