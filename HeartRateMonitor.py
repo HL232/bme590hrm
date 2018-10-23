@@ -60,9 +60,9 @@ def find_avg_hr(time_of_beats):
 
 if __name__ == "__main__":
     Tk().withdraw()
-    # **************************************************************Replace the file path with file_name in the future
+    # *************************Replace the file path with file_name in the future
     # file_name = askopenfilename()
-    file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/bme590hrm/test_data/test_data1.csv'
+    file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/bme590hrm/test_data/test_data1.csv'  #  nopep8
     try:
         ecg_data = read_ecg(file_name)
     except TypeError:
