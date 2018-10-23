@@ -4,4 +4,4 @@ python:
 install:
       - pip install -r requirements.txt
 script: 
-          - pytest -v --cov --pep8 --ignore=E223,E501 detect_peaks.py
+          - pytest -v --cov --pep8
