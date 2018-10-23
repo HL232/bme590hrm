@@ -100,11 +100,11 @@ def detect_peaks(x, mph=None, mpd=1, threshold=0, edge='rising',
         ine = np.where((np.hstack((dx, 0)) < 0) & (np.hstack((0, dx)) > 0))[0]
     else:
         if edge.lower() in ['rising', 'both']:
-            ire = np.where((np.hstack((dx, 0)) <= 0)
-                           & (np.hstack((0, dx)) > 0))[0]
+            ire = np.where(
+                (np.hstack((dx, 0)) <= 0) & (np.hstack((0, dx)) > 0))[0]
         if edge.lower() in ['falling', 'both']:
-            ife = np.where((np.hstack((dx, 0)) < 0)
-                           & (np.hstack((0, dx)) >= 0))[0]
+            ife = np.where(
+                (np.hstack((dx, 0)) < 0) & (np.hstack((0, dx)) >= 0))[0]
     ind = np.unique(np.hstack((ine, ire, ife)))
     # handle NaN's
     if ind.size and indnan.size:

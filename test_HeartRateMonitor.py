@@ -42,7 +42,7 @@ blahhh def test_find_number_beats():
 
 
 def test_find_beat_times():
-    a = find_beat_times(split_time_data(read_ecg('unit_int_test_data1.csv')), 
+    a = find_beat_times(split_time_data(read_ecg('unit_int_test_data1.csv')),
     detect_peaks(read_ecg('test_data1.csv')))
     b = [ 0.214 1.028 1.842 2.631 3.419 4.208 5.025 5.681 6.675 7.517
  8.328 9.119 9.889 10.731 11.586 12.406 13.236 14.058 14.853 15.65
