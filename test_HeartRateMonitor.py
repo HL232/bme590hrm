@@ -5,25 +5,25 @@ import numpy as np
 
 def test_read_ecg():
     a = read_ecg('unit_int_test_data1.csv')
-    b = np.array([[1,6],[2,7],[3,8],[4,9],[5,10]])
-    np.testing.assert_array_equal(a,b)
+    b = np.array([[1, 6], [2, 7], [3, 8], [4, 9], [5, 10]])
+    np.testing.assert_array_equal(a, b)
 
 
 def test_split_time_data():
     a = split_time_data(read_ecg('unit_int_test_data1.csv'))
-    b = np.array([1,2,3,4,5])
-    np.testing.assert_array_equal(a,b)
+    b = np.array([1, 2, 3, 4, 5])
+    np.testing.assert_array_equal(a, b)
 
 
 def test_split_volt_data():
     a = split_volt_data(read_ecg('unit_int_test_data1.csv'))
-    b = np.array([6,7,8,9,10])
-    np.testing.assert_array_equal(a,b)
+    b = np.array([6, 7, 8, 9, 10])
+    np.testing.assert_array_equal(a, b)
 
 
 def test_find_volt_extreme():
     a = find_volt_extreme(split_volt_data(read_ecg('unit_int_test_data1.csv')))
-    b = (6,10)
+    b = (6, 10)
     assert a == b
 
 
@@ -37,6 +37,7 @@ def test_find_number_beats():
     a = find_number_beats(detect_peaks(read_ecg('test_data1.csv')))
     b = 35
     assert a == b
+
 
 def test_find_beat_times():
     a = find_beat_times(split_time_data(read_ecg('unit_int_test_data1.csv')), detect_peaks(read_ecg('test_data1.csv')))

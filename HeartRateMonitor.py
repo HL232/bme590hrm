@@ -9,9 +9,9 @@ from detect_peaks import detect_peaks
 def read_ecg(file_name):
     if file_name.endswith(".csv"):
         ecg_data = np.genfromtxt(file_name, delimiter=",")
+        return ecg_data
     elif not file_name.endswith(".csv"):
         raise TypeError("File is not a CSV file")
-    return ecg_data
 
 
 # Process the data *******************************************
@@ -61,12 +61,13 @@ def find_avg_hr(time_of_beats):
 if __name__ == "__main__":
     Tk().withdraw()
     # **************************************************************Replace the file path with file_name in the future
-    #file_name = askopenfilename()
+    # file_name = askopenfilename()
     file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/bme590hrm/test_data/test_data1.csv'
     try:
         ecg_data = read_ecg(file_name)
     except TypeError:
         print("Please use a .csv file and try again")
+        ecg_data = []
     time_data = split_time_data(ecg_data)
     volt_data = split_volt_data(ecg_data)
     peaks = detect_peaks(volt_data, mph=0, mpd=10, edge='rising', show=True)
