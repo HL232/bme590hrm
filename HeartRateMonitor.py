@@ -2,6 +2,7 @@ import numpy as np
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 from detect_peaks import detect_peaks
+import json
 
 # Read the data ***********************************************
 
@@ -58,6 +59,30 @@ def find_avg_hr(time_of_beats):
     return mean_hr_bpm
 
 
+# Output to JSON****************************************
+def create_metrics_dictionary(
+        mean_hr_bpm, voltage_extremes, duration, num_beats, beats):
+    dictionary = {"mean_hr_bpm": str(mean_hr_bpm),
+                  "voltage_extremes": str(voltage_extremes),
+                  "duration": str(duration),
+                  "num_beats": str(num_beats),
+                  "beats": str(beats)}
+    return dictionary
+
+
+def short_file_name(file_name):
+    slash_index = file_name.rfind('/') + 1
+    csv_index = file_name.rfind('.csv')
+    short_name = file_name[slash_index:csv_index]
+    return short_name
+
+
+def output_to_json(file_name, dictionary):
+    name_of_json = short_file_name(file_name)
+    with open(name_of_json+'.json', 'w') as fp:
+        json.dump(dictionary, fp, indent=4)
+
+
 if __name__ == "__main__":
     Tk().withdraw()
     # ********************Replace the file path with file_name in the future
@@ -71,15 +96,13 @@ if __name__ == "__main__":
         ecg_data = []
     time_data = split_time_data(ecg_data)
     volt_data = split_volt_data(ecg_data)
-    peaks = detect_peaks(volt_data, mph=0, mpd=10, edge='rising', show=True)
-    print(peaks)  # This just prints an image of the graphs
+    peaks = detect_peaks(volt_data, mph=0, mpd=10, edge='rising', show=False)
     voltage_extremes = find_volt_extreme(volt_data)
     duration = find_time_duration(time_data)
     num_beats = find_number_beats(peaks)
     beats = find_beat_times(time_data, peaks)
     mean_hr_bpm = find_avg_hr(beats)
-    print('The average heart rate is: ' + str(mean_hr_bpm))
-    print('The voltage extremes are: ' + str(voltage_extremes))
-    print('The time duration of the ECG strip is: ' + str(duration) + 'ms')
-    print('The number of beats in the strip is: ' + str(num_beats))
-    print('The array of beat times is: ' + str(beats))
+    dictionary = create_metrics_dictionary(
+        mean_hr_bpm, voltage_extremes, duration, num_beats, beats)
+    print(dictionary)
+    output_to_json(file_name, dictionary)
