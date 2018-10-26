@@ -6,6 +6,7 @@ import json
 
 # Read the data ***********************************************
 
+
 def is_csv(file_name):
     if file_name.endswith(".csv"):
         return True
@@ -20,27 +21,69 @@ def read_ecg(file_name):
         return ecg_data
 
 
-def is_ecg_data_accepted(ecg_data):
-    test_1 = isinstance(ecg_data, np.ndarray)
-   # test_2 = any(np.isnan(t) for t in ecg_data[:,0])
-   # test_3 = any(np.isnan(t) for t in ecg_data[:,1])
-   # data_good = test_1 and test_2 and test_3
-   # return data_good
-   #***********************************************************************************************************
-   #***********************************************************************************************************
-   #***********************************************************************************************************
+def is_data_not_float(data):
+    # Tests that the data is all float data.
+    # This will also determine if volt_data and time_data are the same length
+    data_good = any(np.isnan(t) for t in data)
+    return data_good
 
-# Process the data *******************************************
+
+def is_enough_data(data):
+    if len(data) < 25:
+        raise ValueError("You need more than 25 data points")
 
 
 def split_time_data(ecg_data):
     time_data = ecg_data[:, 0]
-    return time_data
+    if is_data_not_float(time_data):
+        raise TypeError('Time data is not all numeric')
+    else:
+        return time_data
 
 
 def split_volt_data(ecg_data):
     volt_data = ecg_data[:, 1]
-    return volt_data
+    if is_data_not_float(volt_data):
+        raise TypeError('Voltage data is not all numeric')
+    else:
+        return volt_data
+
+# Process the data *******************************************
+
+
+def yes_no(from_input):
+    answer = from_input
+    while answer not in ("yes", "no"):
+        answer = input("Enter yes or no: ")
+        if answer == "yes":
+            return
+        elif answer == "no":
+            raise SystemExit(0)
+        else:
+            print("Please enter yes or no.")
+
+
+def is_volt_data_in_range(voltage_extremes):
+    if voltage_extremes[0] < -5:
+        stop_prompt = input('Voltage below -5V detected. '
+                            'This probably is not good data.'
+                            ' Continue? yes/no')
+        yes_no((stop_prompt))
+    elif voltage_extremes[1] > 5:
+        stop_prompt = input('Voltage above 5V detected. '
+                            'This probably is not good data.'
+                            ' Continue? yes/no')
+        yes_no((stop_prompt))
+
+
+def is_time_too_short(duration):
+    if duration < 5:
+        raise ValueError("You need more than 5 seconds of ECG data")
+
+
+def is_peaks_detected(num_beats):
+    if num_beats == 0:
+        raise ValueError("No heart beats detected in dataset")
 
 
 def find_volt_extreme(volt_data):
@@ -71,9 +114,14 @@ def specify_time():
                                 'should I calculate the mean '
                                 'heart rate?\n'
                                 'Please enter a time in seconds:')
-    user_specified_time = int(user_specified_time)
+    try:
+        user_specified_time = int(user_specified_time)
+    except ValueError:
+        print('I can only take integers. You had one job, '
+              'and you messed it up. Going to default setting '
+              'of 60 seconds')
+        user_specified_time = 60
     return user_specified_time
-# TODO: Confirm that user_specified_time is an integer in range
 
 
 # Input is the beats from find_beat_times
@@ -114,22 +162,23 @@ def output_to_json(file_name, dictionary):
 if __name__ == "__main__":
     Tk().withdraw()
     # ********************Replace the file path with file_name in the future
-    file_name = askopenfilename()
-    #file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/' \
-    #            'bme590hrm/test_data/test_data1.csv'
+    # file_name = askopenfilename()
+    file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/' \
+                'bme590hrm/test_data/test_data1.csv'
     ecg_data = read_ecg(file_name)
-'''
+    is_enough_data(ecg_data)
     time_data = split_time_data(ecg_data)
     volt_data = split_volt_data(ecg_data)
     peaks = detect_peaks(volt_data, mph=0, mpd=10, edge='rising', show=False)
     voltage_extremes = find_volt_extreme(volt_data)
+    is_volt_data_in_range(voltage_extremes)
     duration = find_time_duration(time_data)
+    is_time_too_short(duration)
     num_beats = find_number_beats(peaks)
+    is_peaks_detected(num_beats)
     beats = find_beat_times(time_data, peaks)
     user_specified_time = specify_time()
     mean_hr_bpm = find_avg_hr(beats, user_specified_time)
     dictionary = create_metrics_dictionary(
         mean_hr_bpm, voltage_extremes, duration, num_beats, beats)
-    print(dictionary)
     output_to_json(file_name, dictionary)
-'''
