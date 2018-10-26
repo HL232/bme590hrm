@@ -390,7 +390,7 @@ def output_to_json(file_name, dictionary):
 if __name__ == "__main__":
     Tk().withdraw()
     file_name = askopenfilename()
-    #file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/' \
+    # file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/' \
     #            'bme590hrm/test_data/test_data1.csv'
     ecg_data = read_ecg(file_name)
     is_enough_data(ecg_data)
