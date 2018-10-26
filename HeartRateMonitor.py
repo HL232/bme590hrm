@@ -51,11 +51,24 @@ def find_beat_times(time_data, detected_peaks):
     return beats
 
 
+def specify_time():
+    user_specified_time = input('What time interval '
+                                'should I calculate the mean '
+                                'heart rate?\n'
+                                'Please enter a time in seconds:')
+    user_specified_time = int(user_specified_time)
+    return user_specified_time
+# TODO: Confirm that user_specified_time is an integer in range
+
+
 # Input is the beats from find_beat_times
-def find_avg_hr(time_of_beats):
-    max_time = time_of_beats[-1]  # the time of the last peak
-    num_beats = len(time_of_beats)  # the number of beats in the array
-    mean_hr_bpm = int(round(60/max_time*num_beats))
+def find_avg_hr(time_of_beats, user_specified_time):
+    num_beats = sum(i < user_specified_time for i in time_of_beats)
+    if user_specified_time > time_of_beats[-1]:
+        divisor_time = time_of_beats[-1]
+    else:
+        divisor_time = user_specified_time
+    mean_hr_bpm = int(round(60/divisor_time*num_beats))
     return mean_hr_bpm
 
 
@@ -101,7 +114,8 @@ if __name__ == "__main__":
     duration = find_time_duration(time_data)
     num_beats = find_number_beats(peaks)
     beats = find_beat_times(time_data, peaks)
-    mean_hr_bpm = find_avg_hr(beats)
+    user_specified_time = specify_time()
+    mean_hr_bpm = find_avg_hr(beats, user_specified_time)
     dictionary = create_metrics_dictionary(
         mean_hr_bpm, voltage_extremes, duration, num_beats, beats)
     print(dictionary)
