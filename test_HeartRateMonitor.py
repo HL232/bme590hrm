@@ -13,6 +13,7 @@ num_beats = find_number_beats(peaks)
 beats = find_beat_times(time_data, peaks)
 mean_hr_bpm = find_avg_hr(beats, 30)
 
+
 def test_is_csv():
     with pytest.raises(TypeError):
         is_csv("blah")
@@ -51,11 +52,11 @@ def test_split_volt_data():
     np.testing.assert_array_equal(a, b)
 
 
-
 def test_yes_no():
     # I don't know how to write a unit test for this unit
     # because it is user-input based
     assert True
+
 
 def test_is_volt_data_in_range():
     # I don't know how to write a unit test for this unit
@@ -77,6 +78,7 @@ def test_specify_time():
     # I don't know how to write a unit test for this unit
     # because it is user-input based
     assert True
+
 
 def test_find_volt_extreme():
     a = find_volt_extreme(split_volt_data(read_ecg('unit_int_test_data1.csv')))
