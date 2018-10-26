@@ -1,9 +1,9 @@
 # bme590hrm
 This is my repo for the Heart Rate Monitor project
 
-Author: Howard Li: https://github.com/HL232/bme590hrm
-Version: 1.0
-License: GNU General Public License v3.0
+ Author: Howard Li: https://github.com/HL232/bme590hrm
+ Version: 1.0
+ License: GNU General Public License v3.0
 
 ## What's included in this repo:
  + `test_data` folder with the ECG data CSV files
@@ -44,7 +44,13 @@ If you look at the `if __name__ == "__main__":` function, this is basically what
 
 
 
-The assignment is copied below:
+
+
+
+
+
+
+ The original assignment is copied below:
 
 # Heart Rate Monitor
 
