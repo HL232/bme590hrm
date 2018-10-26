@@ -6,14 +6,29 @@ import json
 
 # Read the data ***********************************************
 
-
-def read_ecg(file_name):
+def is_csv(file_name):
     if file_name.endswith(".csv"):
-        ecg_data = np.genfromtxt(file_name, delimiter=",")
-        return ecg_data
+        return True
     elif not file_name.endswith(".csv"):
         raise TypeError("File is not a CSV file")
+    return False
 
+
+def read_ecg(file_name):
+    if is_csv(file_name):
+        ecg_data = np.genfromtxt(file_name, delimiter=",")
+        return ecg_data
+
+
+def is_ecg_data_accepted(ecg_data):
+    test_1 = isinstance(ecg_data, np.ndarray)
+   # test_2 = any(np.isnan(t) for t in ecg_data[:,0])
+   # test_3 = any(np.isnan(t) for t in ecg_data[:,1])
+   # data_good = test_1 and test_2 and test_3
+   # return data_good
+   #***********************************************************************************************************
+   #***********************************************************************************************************
+   #***********************************************************************************************************
 
 # Process the data *******************************************
 
@@ -99,14 +114,11 @@ def output_to_json(file_name, dictionary):
 if __name__ == "__main__":
     Tk().withdraw()
     # ********************Replace the file path with file_name in the future
-    # file_name = askopenfilename()
-    file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/' \
-                'bme590hrm/test_data/test_data1.csv'
-    try:
-        ecg_data = read_ecg(file_name)
-    except TypeError:
-        print("Please use a .csv file and try again")
-        ecg_data = []
+    file_name = askopenfilename()
+    #file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/' \
+    #            'bme590hrm/test_data/test_data1.csv'
+    ecg_data = read_ecg(file_name)
+'''
     time_data = split_time_data(ecg_data)
     volt_data = split_volt_data(ecg_data)
     peaks = detect_peaks(volt_data, mph=0, mpd=10, edge='rising', show=False)
@@ -120,3 +132,4 @@ if __name__ == "__main__":
         mean_hr_bpm, voltage_extremes, duration, num_beats, beats)
     print(dictionary)
     output_to_json(file_name, dictionary)
+'''
