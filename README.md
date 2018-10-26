@@ -1,5 +1,48 @@
 # bme590hrm
-Repo for BME Software Design Heart Rate Monitor assignment
+This is my repo for the Heart Rate Monitor project
+
+Author: Howard Li: https://github.com/HL232/bme590hrm
+Version: 1.0
+License: GNU General Public License v3.0
+
+## What's included in this repo:
+ + `test_data` folder with the ECG data CSV files
+ + `.gitignore` file for what to ignore when working with Git
+ + `.travis.yml` file for setting up Travis CI
+ + `Functional Block Diagram.dox` a functional block diagram (that's really just a list) that I used for this project
+ + `HeartRateMonitor.py` This is the main python code. Simply run this file to run my project. This file includes all the functions and the logic for reading the ECG data sets. More on how it works later
+ + `README.md` This document
+ + `detect_peaks.py` This is the peak detection algorithm I used for this project. Original author: Marcos Duarte. Source code can be found here: http://nbviewer.jupyter.org/github/demotu/BMC/blob/master/notebooks/DetectPeaks.ipynb. Usage under MIT license. 
+ + `requirements.txt` This is the requirements for setting up a virtual environment
+ + `test_HeartRateMonitor.py` This includes all my unit tests. 
+ + `test_data1.csv, unit_int_test_data1.csv, unit_int_test_data2.csv` Are basic CSV files I use in the unit tests. Should be downloaded into the same local folder as the unit test code when pulling the repo
+
+## How to run this project:
+ 1. Clone this repo, or download the contents
+ 2. In your local python virtual environment (eg: Anaconda, Pycharm, Linux, etc) run the HeartRateMonitor.py python file.
+ 3. You will first be prompted to select a file. You need to select a CSV file with ECG data. 
+ 4. You will then be prompted to choose a time interval. Type this into your python terminal. 
+ 5. The script will run. It will calculate the average heart rate over the specified time interval, the minimum and maximum voltages points, the duration of the ECG strip, the number of heartbeats detected, and the times when these heartbeats occurred.
+ 6. These values are saved onto a dictionary, imported into a JSON file with the same name as the CSV data file you selected. The JSON file should save into the same folder as whereever you cloned this repo. 
+ 
+## Detailed notes on code logic:
+If you look at the `if __name__ == "__main__":` function, this is basically what is happening:
+ 1. tkinter package is used to allow the user to select which file to load into the program.
+ 2. The ECG data is read into a numpy array. EXCEPTIONS: Will raise a TypeError if you do not choose a CSV file
+ 3. EXCEPTION: Will raise a ValueError if the file you selected does not have at least 25 data points.
+ 4. The ECG numpy array is split into two separate arrays: the time data, and the voltage data. EXCEPTIONS: Will raise a TypeError if any of the data is non-numeric. Therefore the CSV file cannot contain any missing data or words
+ 5. Peaks are detected using the `detect_peaks` algorithm. The index locations of the peaks are saved.
+ 6. The voltage extremes (aka voltage min and max) are found. EXCEPTIONS: If the min or max voltage is outside the range of -5V to 5V, the program will prompt the user, asking to continue or not. This is because voltage data outside this range may not be good ECG data. User can choose to continue or not. Not a lethal error
+ 7. The duration of the ECG strip is determined using the last time data point. EXCEPTION: Will raise a ValueError if the ECG strip is not more than 5 seconds because this is not enough ECG data to make do good science.
+ 8. The number of beats detected is calculated. EXCEPTIONS: Will raise a ValueError if 0 heart beats are detected. 
+ 9. The time of when these beats occurs is calculated using the index values and the time array. 
+ 10. The program asks the user to specify a time for which to calculate average heart rate. If the user does not input an integer time, the default setting of 60 seconds is used.
+ 11. The mean heart rate is calculated over the user specifed time interval. 
+ 12. The above values in steps 7-12 are saved to a dictionary. The values are all stored as strings
+ 13. The dictionary is saved to a JSON file. The logic of how to name the JSON file is basically: Find the name of the CSV file, and save the JSON file as the same name. 
+ 
+
+
 
 The assignment is copied below:
 
