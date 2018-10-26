@@ -22,7 +22,7 @@ def read_ecg(file_name):
 
 
 def is_data_not_float(data):
-    # Tests that the data is all float data.
+    # Tests that the data is all float data. Returns True is nan exists
     # This will also determine if volt_data and time_data are the same length
     data_good = any(np.isnan(t) for t in data)
     return data_good
@@ -68,12 +68,12 @@ def is_volt_data_in_range(voltage_extremes):
         stop_prompt = input('Voltage below -5V detected. '
                             'This probably is not good data.'
                             ' Continue? yes/no')
-        yes_no((stop_prompt))
+        yes_no(stop_prompt)
     elif voltage_extremes[1] > 5:
         stop_prompt = input('Voltage above 5V detected. '
                             'This probably is not good data.'
                             ' Continue? yes/no')
-        yes_no((stop_prompt))
+        yes_no(stop_prompt)
 
 
 def is_time_too_short(duration):
@@ -157,6 +157,8 @@ def output_to_json(file_name, dictionary):
     name_of_json = short_file_name(file_name)
     with open(name_of_json+'.json', 'w') as fp:
         json.dump(dictionary, fp, indent=4)
+
+# Run the package below**************************************************
 
 
 if __name__ == "__main__":
