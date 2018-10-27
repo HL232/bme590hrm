@@ -18,6 +18,7 @@ This is my repo for the Heart Rate Monitor project
  + `requirements.txt` This is the requirements for setting up a virtual environment
  + `test_HeartRateMonitor.py` This includes all my unit tests. 
  + `test_data1.csv, unit_int_test_data1.csv, unit_int_test_data2.csv` Are basic CSV files I use in the unit tests. Should be downloaded into the same local folder as the unit test code when pulling the repo
+ + `docs, make.bat, index.rst, conf.pu, and Makefile` were all added after Sphinx Quickstart tool on Pycharm. It's not generating the documentation and I don't know how to fix it. 
 
 ## How to run this project:
  1. Clone this repo, or download the contents
