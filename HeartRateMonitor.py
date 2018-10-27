@@ -392,19 +392,57 @@ def output_to_json(file_name, dictionary):
     with open(name_of_json+'.json', 'w') as fp:
         json.dump(dictionary, fp, indent=4)
 
+
+# Small modifications to detect_peaks function
+
+
+def determine_mph(volt_data):
+    """Determines the minimum height to be considered a heart
+    beat. A peak must be at least 1 more standard dev.
+    above the mean of the voltage data
+     to be considered a heartbeat
+
+    Args:
+        volt_data: The array of voltage data.
+
+    Returns:
+        mph: The minimum heart beat height.
+
+    """
+    mph_average = np.mean(volt_data)
+    mph_std = np.std(volt_data)
+    mph = mph_average + mph_std
+    return mph
+
+
+def determine_threshold(volt_data):
+    """All heart beats must be higher than a certain threshold
+    That threshold is the average of the voltage values
+
+    Args:
+        volt_data: The array of voltage data.
+
+    Returns:
+        thres: The minimum heart beat threshold
+
+    """
+    thres = np.mean(volt_data)
+    return thres
+
+
 # Run the package below**************************************************
 
 
 if __name__ == "__main__":
     Tk().withdraw()
     file_name = askopenfilename()
-    # file_name = 'C:/Users/Howard Li/OneDrive/^2018 Fall/Software Design/' \
-    #            'bme590hrm/test_data/test_data1.csv'
     ecg_data = read_ecg(file_name)
     is_enough_data(ecg_data)
     time_data = split_time_data(ecg_data)
     volt_data = split_volt_data(ecg_data)
-    peaks = detect_peaks(volt_data, mph=0, mpd=10, edge='rising', show=False)
+    mph = determine_mph(volt_data)
+    threshold = determine_threshold(volt_data)
+    peaks = detect_peaks(volt_data, mph=mph, mpd=10, threshold=threshold, edge='rising', show=False)
     voltage_extremes = find_volt_extreme(volt_data)
     is_volt_data_in_range(voltage_extremes)
     duration = find_time_duration(time_data)
@@ -417,3 +455,4 @@ if __name__ == "__main__":
     dictionary = create_metrics_dictionary(
         mean_hr_bpm, voltage_extremes, duration, num_beats, beats)
     output_to_json(file_name, dictionary)
+    print(determine_mph([1,2,3,4,5]))
