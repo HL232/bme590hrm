@@ -46,6 +46,47 @@ If you look at the `if __name__ == "__main__":` function, this is basically what
  
 
 
+## Detailed notes on Detect_Peak.py:
+
+
+## What works and what doesn't:
+ +`test_data1` - Works fine
+ +`test_data2` - Works fine
+ +`test_data3` - Detects too many heartbeat peaks
+ +`test_data4` - Works fine
+ +`test_data5` - Detects too many peaks
+ +`test_data6` - Works fine
+ +`test_data7` - Detects too many peaks
+ +`test_data8` - Works fine
+ +`test_data9` - Does not detect enough peaks
+ +`test_data10` - Detects most peaks (still missing ~15% of heart beats)
+ +`test_data11` - Too many peaks
+ +`test_data12` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ +`test_data13` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ +`test_data14` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ +`test_data15` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ +`test_data16` - Works fine
+ +`test_data17` - Works fine
+ +`test_data18` - Works fine
+ +`test_data19` - Works fine
+ +`test_data20` - Works fine
+ +`test_data21` - Works fine
+ +`test_data22` - Works fine
+ +`test_data23` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ +`test_data24` - Code recognizes that this is probably not a good ECG dataset because it has a voltage over 5V. User can stop
+ +`test_data25` - Only 1 heartbeat detected
+ +`test_data26` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ +`test_data27` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ +`test_data28` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ +`test_data29` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ +`test_data30` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ +`test_data31` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ +`test_data32` - Code works, but Code recognizes that this is probably not a good ECG dataset because it has a voltage over 5V. User can stop
+ 
+ 
+ 
+ 
+
 
 
 
