@@ -149,7 +149,7 @@ def yes_no(from_input):
             print("Please enter yes or no.")
 
 
-def is_volt_data_in_range(voltage_extremes, stop_prompt = None):
+def is_volt_data_in_range(voltage_extremes, stop_prompt=None):
     """Tests if the voltage data is reasonable
 
         Prompts user that data may not be trustworthy if any data
@@ -275,7 +275,7 @@ def find_beat_times(time_data, detected_peaks):
     return beats
 
 
-def specify_time(user_specified_time = None):
+def specify_time(user_specified_time=None):
     """User specified time over which to measure the
     mean heart rate. Measured from the beginning of
     the time strip
@@ -442,7 +442,8 @@ if __name__ == "__main__":
     volt_data = split_volt_data(ecg_data)
     mph = determine_mph(volt_data)
     threshold = determine_threshold(volt_data)
-    peaks = detect_peaks(volt_data, mph=mph, mpd=10, threshold=threshold, edge='rising', show=False)
+    peaks = detect_peaks(volt_data, mph=mph, mpd=10,
+                         threshold=threshold, edge='rising', show=False)
     voltage_extremes = find_volt_extreme(volt_data)
     is_volt_data_in_range(voltage_extremes)
     duration = find_time_duration(time_data)
@@ -455,4 +456,3 @@ if __name__ == "__main__":
     dictionary = create_metrics_dictionary(
         mean_hr_bpm, voltage_extremes, duration, num_beats, beats)
     output_to_json(file_name, dictionary)
-    print(determine_mph([1,2,3,4,5]))
