@@ -135,17 +135,21 @@ def yes_no(from_input):
 
     """
     answer = from_input
+    if answer == "yes":
+        return 'Continue!'
+    elif answer == "no":
+        raise SystemExit(0)
     while answer not in ("yes", "no"):
         answer = input("Enter yes or no: ")
         if answer == "yes":
-            return
+            return 'Continue!'
         elif answer == "no":
             raise SystemExit(0)
         else:
             print("Please enter yes or no.")
 
 
-def is_volt_data_in_range(voltage_extremes):
+def is_volt_data_in_range(voltage_extremes, stop_prompt = None):
     """Tests if the voltage data is reasonable
 
         Prompts user that data may not be trustworthy if any data
@@ -155,21 +159,24 @@ def is_volt_data_in_range(voltage_extremes):
     Args:
         voltage_extremes: The highest and lowest
         detected voltage data from the ECG data
+        stop_prompt: Default is none, mostly used for unit testing
 
     Returns:
         None
 
     """
     if voltage_extremes[0] < -5:
-        stop_prompt = input('Voltage below -5V detected. '
-                            'This probably is not good data.'
-                            ' Continue? yes/no')
-        yes_no(stop_prompt)
+        if stop_prompt is None:
+            stop_prompt = input('Voltage below -5V detected. '
+                                'This probably is not good data.'
+                                ' Continue? yes/no')
+        return yes_no(stop_prompt)
     elif voltage_extremes[1] > 5:
-        stop_prompt = input('Voltage above 5V detected. '
-                            'This probably is not good data.'
-                            ' Continue? yes/no')
-        yes_no(stop_prompt)
+        if stop_prompt is None:
+            stop_prompt = input('Voltage above 5V detected. '
+                                'This probably is not good data.'
+                                ' Continue? yes/no')
+        return yes_no(stop_prompt)
 
 
 def is_time_too_short(duration):
@@ -268,7 +275,7 @@ def find_beat_times(time_data, detected_peaks):
     return beats
 
 
-def specify_time():
+def specify_time(user_specified_time = None):
     """User specified time over which to measure the
     mean heart rate. Measured from the beginning of
     the time strip
@@ -284,10 +291,11 @@ def specify_time():
         user_specified_time: (int) integer value in seconds
 
     """
-    user_specified_time = input('What time interval '
-                                'should I calculate the mean '
-                                'heart rate?\n'
-                                'Please enter a time in seconds:')
+    if user_specified_time is None:
+        user_specified_time = input('What time interval '
+                                    'should I calculate the mean '
+                                    'heart rate?\n'
+                                    'Please enter a time in seconds:')
     try:
         user_specified_time = int(user_specified_time)
     except ValueError:
