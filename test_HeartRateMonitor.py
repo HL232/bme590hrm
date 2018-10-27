@@ -71,7 +71,7 @@ def test_yes_no():
 
 
 def test_is_volt_data_in_range():
-    a = is_volt_data_in_range((-6,3),'yes')
+    a = is_volt_data_in_range((-6,3), 'yes')
     b = 'Continue!'
     assert a == b
 
@@ -84,6 +84,7 @@ def test_is_time_too_short():
 def test_is_peaks_detected():
     with pytest.raises(ValueError):
         is_peaks_detected(0)
+
 
 @pytest.mark.parametrize("time, expected", [
     (1010, 1010),
@@ -147,7 +148,7 @@ def test_output_to_json():
         'b': '2',
         'c': '3'
     }
-    a = output_to_json('/unit_test.csv', dict)
+    output_to_json('/unit_test.csv', dict)
     with open('unit_test.json') as f:
         b = json.load(f)
     assert dict == b
