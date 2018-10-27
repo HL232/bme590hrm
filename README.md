@@ -21,6 +21,7 @@ This is my repo for the Heart Rate Monitor project
  + `docs, make.bat, index.rst, conf.pu, and Makefile` were all added after Sphinx Quickstart tool on Pycharm. It's not generating the documentation and I don't know how to fix it. 
 
 ## How to run this project:
+ WARNING: This program only works well for "nice" ECG datasets. 
  1. Clone this repo, or download the contents
  2. In your local python virtual environment (eg: Anaconda, Pycharm, Linux, etc) run the HeartRateMonitor.py python file.
  3. You will first be prompted to select a file. You need to select a CSV file with ECG data. 
@@ -43,50 +44,49 @@ If you look at the `if __name__ == "__main__":` function, this is basically what
  11. The mean heart rate is calculated over the user specifed time interval. 
  12. The above values in steps 7-12 are saved to a dictionary. The values are all stored as strings
  13. The dictionary is saved to a JSON file. The logic of how to name the JSON file is basically: Find the name of the CSV file, and save the JSON file as the same name. 
- 
-
-
-## Detailed notes on Detect_Peak.py:
 
 
 ## What works and what doesn't:
- +`test_data1` - Works fine
- +`test_data2` - Works fine
- +`test_data3` - Detects too many heartbeat peaks
- +`test_data4` - Works fine
- +`test_data5` - Detects too many peaks
- +`test_data6` - Works fine
- +`test_data7` - Detects too many peaks
- +`test_data8` - Works fine
- +`test_data9` - Does not detect enough peaks
- +`test_data10` - Detects most peaks (still missing ~15% of heart beats)
- +`test_data11` - Too many peaks
- +`test_data12` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
- +`test_data13` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
- +`test_data14` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
- +`test_data15` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
- +`test_data16` - Works fine
- +`test_data17` - Works fine
- +`test_data18` - Works fine
- +`test_data19` - Works fine
- +`test_data20` - Works fine
- +`test_data21` - Works fine
- +`test_data22` - Works fine
- +`test_data23` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
- +`test_data24` - Code recognizes that this is probably not a good ECG dataset because it has a voltage over 5V. User can stop
- +`test_data25` - Only 1 heartbeat detected
- +`test_data26` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
- +`test_data27` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
- +`test_data28` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
- +`test_data29` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
- +`test_data30` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
- +`test_data31` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
- +`test_data32` - Code works, but Code recognizes that this is probably not a good ECG dataset because it has a voltage over 5V. User can stop
+ + `test_data1` - Works fine
+ + `test_data2` - Works fine
+ + `test_data3` - Detects too many heartbeat peaks
+ + `test_data4` - Works fine
+ + `test_data5` - Detects too many peaks
+ + `test_data6` - Works fine
+ + `test_data7` - Detects too many peaks
+ + `test_data8` - Works fine
+ + `test_data9` - Does not detect enough peaks
+ + `test_data10` - Detects most peaks (still missing ~15% of heart beats)
+ + `test_data11` - Too many peaks
+ + `test_data12` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ + `test_data13` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ + `test_data14` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ + `test_data15` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ + `test_data16` - Works fine
+ + `test_data17` - Works fine
+ + `test_data18` - Works fine
+ + `test_data19` - Works fine
+ + `test_data20` - Works fine
+ + `test_data21` - Works fine
+ + `test_data22` - Works fine
+ + `test_data23` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ + `test_data24` - Code recognizes that this is probably not a good ECG dataset because it has a voltage over 5V. User can stop
+ + `test_data25` - Only 1 heartbeat detected
+ + `test_data26` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ + `test_data27` - 0 heart beats detected (throws an Error because of this. No JSON file produced)
+ + `test_data28` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ + `test_data29` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ + `test_data30` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ + `test_data31` - throws an error, the time data is not all numeric. Maybe missing data or contains non-numbers
+ + `test_data32` - Code works, but Code recognizes that this is probably not a good ECG dataset because it has a voltage over 5V. User can stop
  
  
- 
- 
-
+## Future To do Items:
+ + I CAN'T GET THE SPHINX DOCUMENTATION TO AUTO GENERATE DOCUMENTATION AGH
+ + Make the heart beat detection/peak finding algorithm more robust
+ + Handle missing data points in the ECG data set
+ + Make the user inputs and user interface a bit more user friendly (maybe add GUIs and stuff)
+ + Get the heart rate monitor to work for all the test data sets
 
 
 
