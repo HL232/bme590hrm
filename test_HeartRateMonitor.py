@@ -14,54 +14,66 @@ beats = find_beat_times(time_data, peaks)
 mean_hr_bpm = find_avg_hr(beats, 30)
 
 
+@pytest.fixture
+def unit_int_test_data1():
+    unit_int_test_data1 = read_ecg('unit_int_test_data1.csv')
+    return unit_int_test_data1
+
+
 def test_is_csv():
     with pytest.raises(TypeError):
         is_csv("blah")
 
 
-def test_read_ecg():
-    a = read_ecg('unit_int_test_data1.csv')
+def test_is_csv2():
+    a = is_csv('unittest.csv')
+    b = True
+    assert a == b
+
+
+def test_read_ecg(unit_int_test_data1):
+    a = unit_int_test_data1
     b = np.array([[1, 6], [2, 7], [3, 8], [4, 9], [5, 10]])
     np.testing.assert_array_equal(a, b)
 
 
-def test_is_data_not_float():
-    ecg_data = read_ecg('unit_int_test_data1.csv')
+def test_is_data_not_float(unit_int_test_data1):
+    ecg_data = unit_int_test_data1
     time_data = split_time_data(ecg_data)
     a = is_data_not_float(time_data)
     b = False
     assert a == b
 
 
-def test_is_enough_data():
-    ecg_data = read_ecg('unit_int_test_data1.csv')
+def test_is_enough_data(unit_int_test_data1):
+    ecg_data = unit_int_test_data1
     time_data = split_time_data(ecg_data)
     with pytest.raises(ValueError):
         is_enough_data(time_data)
 
 
-def test_split_time_data():
-    a = split_time_data(read_ecg('unit_int_test_data1.csv'))
+def test_split_time_data(unit_int_test_data1):
+    a = split_time_data(unit_int_test_data1)
     b = np.array([1, 2, 3, 4, 5])
     np.testing.assert_array_equal(a, b)
 
 
-def test_split_volt_data():
-    a = split_volt_data(read_ecg('unit_int_test_data1.csv'))
+def test_split_volt_data(unit_int_test_data1):
+    a = split_volt_data(unit_int_test_data1)
     b = np.array([6, 7, 8, 9, 10])
     np.testing.assert_array_equal(a, b)
 
 
 def test_yes_no():
-    # I don't know how to write a unit test for this unit
-    # because it is user-input based
-    assert True
+    a = yes_no('yes')
+    b = 'Continue!'
+    assert a == b
 
 
 def test_is_volt_data_in_range():
-    # I don't know how to write a unit test for this unit
-    # because it is user-input based
-    assert True
+    a = is_volt_data_in_range((-6,3),'yes')
+    b = 'Continue!'
+    assert a == b
 
 
 def test_is_time_too_short():
@@ -73,22 +85,24 @@ def test_is_peaks_detected():
     with pytest.raises(ValueError):
         is_peaks_detected(0)
 
+@pytest.mark.parametrize("time, expected", [
+    (1010, 1010),
+    ('blah', 60)
+])
+def test_specify_time(time, expected):
+    a = specify_time(time)
+    b = expected
+    assert a == b
 
-def test_specify_time():
-    # I don't know how to write a unit test for this unit
-    # because it is user-input based
-    assert True
 
-
-def test_find_volt_extreme():
-    a = find_volt_extreme(split_volt_data(read_ecg('unit_int_test_data1.csv')))
+def test_find_volt_extreme(unit_int_test_data1):
+    a = find_volt_extreme(split_volt_data(unit_int_test_data1))
     b = (6, 10)
     assert a == b
 
 
-def test_find_time_duration():
-    a = find_time_duration(split_time_data(
-        read_ecg('unit_int_test_data1.csv')))
+def test_find_time_duration(unit_int_test_data1):
+    a = find_time_duration(split_time_data(unit_int_test_data1))
     b = 5
     assert a == b
 
