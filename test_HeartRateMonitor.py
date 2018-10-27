@@ -71,7 +71,7 @@ def test_yes_no():
 
 
 def test_is_volt_data_in_range():
-    a = is_volt_data_in_range((-6,3), 'yes')
+    a = is_volt_data_in_range((-6, 3), 'yes')
     b = 'Continue!'
     assert a == b
 
@@ -152,3 +152,14 @@ def test_output_to_json():
     with open('unit_test.json') as f:
         b = json.load(f)
     assert dict == b
+
+
+def test_determine_mph():
+    a = determine_mph([1, 2, 3, 4, 5])
+    assert a == pytest.approx(4.414, 0.1)
+
+
+def test_threshold():
+    a = determine_threshold([1, 2, 3, 4, 5])
+    b = 3
+    assert a == b
