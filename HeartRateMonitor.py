@@ -285,7 +285,7 @@ def specify_time(user_specified_time = None):
     Then defaults input to 60 seconds.
 
     Args:
-        None
+        user_specified_time: This is just for unit testing. Do not change this
 
     Returns:
         user_specified_time: (int) integer value in seconds
