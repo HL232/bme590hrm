@@ -18,7 +18,8 @@ This is my repo for the Heart Rate Monitor project
  + `requirements.txt` This is the requirements for setting up a virtual environment
  + `test_HeartRateMonitor.py` This includes all my unit tests. 
  + `test_data1.csv, unit_int_test_data1.csv, unit_int_test_data2.csv` Are basic CSV files I use in the unit tests. Should be downloaded into the same local folder as the unit test code when pulling the repo
- + `docs, make.bat, index.rst, conf.pu, and Makefile` were all added after Sphinx Quickstart tool on Pycharm. It's not generating the documentation and I don't know how to fix it. 
+ + `_build, docs, make.bat, index.rst, conf.py, and Makefile` were all added after Sphinx Quickstart tool on Pycharm. The documentation for this project can be found in the `_build -> html -> index.html` file path. 
+ 
 
 ## How to run this project:
  WARNING: This program only works well for "nice" ECG datasets. 
@@ -82,7 +83,6 @@ If you look at the `if __name__ == "__main__":` function, this is basically what
  
  
 ## Future To do Items:
- + I CAN'T GET THE SPHINX DOCUMENTATION TO AUTO GENERATE DOCUMENTATION AGH
  + Make the heart beat detection/peak finding algorithm more robust
  + Handle missing data points in the ECG data set
  + Make the user inputs and user interface a bit more user friendly (maybe add GUIs and stuff)
