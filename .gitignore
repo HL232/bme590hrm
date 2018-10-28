@@ -40,7 +40,6 @@ __pycache__
 .idea
 _static
 _templates
-docs
 index.rst
 make.bat
 Makefile
