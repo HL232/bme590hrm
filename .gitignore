@@ -38,6 +38,5 @@ Thumbs.db
 __pycache__
 .pytest_cache
 .idea
-_build
 _static
 _templates

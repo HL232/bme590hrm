@@ -1,0 +1,524 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>HeartRateMonitor module &#8212; bme590hrm 1.0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-HeartRateMonitor">
+<span id="heartratemonitor-module"></span><h1>HeartRateMonitor module<a class="headerlink" href="#module-HeartRateMonitor" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="HeartRateMonitor.create_metrics_dictionary">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">create_metrics_dictionary</code><span class="sig-paren">(</span><em>mean_hr_bpm</em>, <em>voltage_extremes</em>, <em>duration</em>, <em>num_beats</em>, <em>beats</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.create_metrics_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a dictionary from all the needed metrics like
+mean heart rate, the voltage extremes, the duration of the ECG data,
+the number of heartbeats detected, and the times when the
+heartbeats occured</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mean_hr_bpm</strong> – (int) average heart rate in BPM</li>
+<li><strong>voltage_extremes</strong> – (tuple) tuple of the min and max voltage</li>
+<li><strong>duration</strong> – (float) duration of ECG strip in ms</li>
+<li><strong>num_beats</strong> – (int) the number of heartbeats detected</li>
+<li><strong>beats</strong> – (array) the time values when heartbeats occured</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dictionary that organizes all these inputs</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.determine_mph">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">determine_mph</code><span class="sig-paren">(</span><em>volt_data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.determine_mph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the minimum height to be considered a heart
+beat. A peak must be at least 1 more standard dev.
+above the mean of the voltage data</p>
+<blockquote>
+<div>to be considered a heartbeat</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>volt_data</strong> – The array of voltage data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The minimum heart beat height.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">mph</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.determine_threshold">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">determine_threshold</code><span class="sig-paren">(</span><em>volt_data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.determine_threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>All heart beats must be higher than a certain threshold
+That threshold is the average of the voltage values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>volt_data</strong> – The array of voltage data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The minimum heart beat threshold</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">thres</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.find_avg_hr">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">find_avg_hr</code><span class="sig-paren">(</span><em>time_of_beats</em>, <em>user_specified_time</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.find_avg_hr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the average heart rate over user
+specified amount of time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time_of_beats</strong> – (array) of times when a heartbeat detected</li>
+<li><strong>user_specified_time</strong> – (int) time interval to calculate</li>
+<li><strong>heart rate</strong><strong>, </strong><strong>user specified</strong> (<em>average</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(int) average heart rate, rounded to the
+nearest integer</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mean_hr_beat</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.find_beat_times">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">find_beat_times</code><span class="sig-paren">(</span><em>time_data</em>, <em>detected_peaks</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.find_beat_times" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the time value when heartbeats occurred</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time_data</strong> – (array) the time part of the ECG data</li>
+<li><strong>detected_peaks</strong> – array of the indexes where a heartbeat</li>
+<li><strong>detected</strong> (<em>was</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(array) of time values where heartbeat detected</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">beats</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.find_number_beats">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">find_number_beats</code><span class="sig-paren">(</span><em>detected_peaks</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.find_number_beats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the number of heartbeats in the ECG strip</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>detected_peaks</strong> – array of the indexes where a heartbeat</li>
+<li><strong>detected</strong> (<em>was</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(int) the number of heartbeats detected</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">num_beats</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.find_time_duration">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">find_time_duration</code><span class="sig-paren">(</span><em>time_data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.find_time_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the duration of the ECG strip</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time_data</strong> – (array) the time part of the ECG data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(float) value of the last time point in ms</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">duration</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.find_volt_extreme">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">find_volt_extreme</code><span class="sig-paren">(</span><em>volt_data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.find_volt_extreme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the highest and lowest voltages</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>volt_data</strong> – (array) the voltage part of the ECG data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple of the (minimum, maxiumum) voltage</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">voltage_extremes</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.is_csv">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">is_csv</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.is_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if the input file is a CSV</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> – (string) name of the file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns True if file is CSV, otherwise False</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If file_name is not a CSV</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.is_data_not_float">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">is_data_not_float</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.is_data_not_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if the input data is all floats or not</p>
+<p>Also used to tests if the x and y columns
+of the CSV data are of the same length</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – array of data to parse through</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns True if a NaN exists in the array.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.is_enough_data">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">is_enough_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.is_enough_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if there is sufficient ECG data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – 1D array of data to parse through</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Nothing is returned</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If there are less than 25 data points</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.is_peaks_detected">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">is_peaks_detected</code><span class="sig-paren">(</span><em>num_beats</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.is_peaks_detected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if any heartbeats are detected at all</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_beats</strong> – the number of heartbeats detected</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If there are no heartbeats detected</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.is_time_too_short">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">is_time_too_short</code><span class="sig-paren">(</span><em>duration</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.is_time_too_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if the ECG strip has sufficient time data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>duration</strong> – the time of the last measured ECG data point</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – At least 5 seconds of ECG data is needed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.is_volt_data_in_range">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">is_volt_data_in_range</code><span class="sig-paren">(</span><em>voltage_extremes</em>, <em>stop_prompt=None</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.is_volt_data_in_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if the voltage data is reasonable</p>
+<blockquote>
+<div>Prompts user that data may not be trustworthy if any data
+is more than 5V or less than -5V. User decides to continue
+or not</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>voltage_extremes</strong> – The highest and lowest</li>
+<li><strong>voltage data from the ECG data</strong> (<em>detected</em>) – </li>
+<li><strong>stop_prompt</strong> – Default is none, mostly used for unit testing</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.output_to_json">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">output_to_json</code><span class="sig-paren">(</span><em>file_name</em>, <em>dictionary</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.output_to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the dictionary of values into a JSON file
+Makes a JSON file with the same name as the CSV data file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_name</strong> – the long file name of the CSV. Will be</li>
+<li><strong>through a built the short_file_name function</strong> (<em>shortened</em>) – </li>
+<li><strong>dictionary</strong> – the dictionary will all the data to be</li>
+<li><strong>to the JSON file.</strong> (<em>written</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.read_ecg">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">read_ecg</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.read_ecg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the CSV file into numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> – (string) name of the CSV file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns numpy.array of the ECG data in the file</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If file_name is not a CSV</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.short_file_name">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">short_file_name</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.short_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines a short file name to name the JSON file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> – The long file name of the input CSV file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The shortened name of the CSV file
+so that the JSON is named the same thing</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">short_name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.specify_time">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">specify_time</code><span class="sig-paren">(</span><em>user_specified_time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.specify_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>User specified time over which to measure the
+mean heart rate. Measured from the beginning of
+the time strip</p>
+<p>Asks the user to input a time interval. Raises
+a ValueError if the user gives anything but an integer
+Then defaults input to 60 seconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user_specified_time</strong> – This is just for unit testing. Do not change this</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(int) integer value in seconds</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">user_specified_time</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.split_time_data">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">split_time_data</code><span class="sig-paren">(</span><em>ecg_data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.split_time_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the time data from the ECG data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ecg_data</strong> – array of ECG datapoints</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of time data points</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If there any data is non-numeric</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.split_volt_data">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">split_volt_data</code><span class="sig-paren">(</span><em>ecg_data</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.split_volt_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the voltage data from the ECG data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ecg_data</strong> – array of ECG datapoints</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of voltage data points</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If there any data is non-numeric</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="HeartRateMonitor.yes_no">
+<code class="descclassname">HeartRateMonitor.</code><code class="descname">yes_no</code><span class="sig-paren">(</span><em>from_input</em><span class="sig-paren">)</span><a class="headerlink" href="#HeartRateMonitor.yes_no" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to get user input as yes/no only</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>from_input</strong> – user’s previous input</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code> – If user does not want to continue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/docs/HeartRateMonitor.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Howard Li.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/docs/HeartRateMonitor.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
