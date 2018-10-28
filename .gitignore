@@ -38,6 +38,10 @@ Thumbs.db
 __pycache__
 .pytest_cache
 .idea
-_build
 _static
+_build
 _templates
+docs
+index.rst
+make.bat
+Makefile
