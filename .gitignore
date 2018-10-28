@@ -39,7 +39,6 @@ __pycache__
 .pytest_cache
 .idea
 _static
-_build
 _templates
 docs
 index.rst
